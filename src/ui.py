@@ -19,5 +19,5 @@ class UserInterface:
 
     def display_result(self, result):
         """Отображение результата перевода"""
-        print("Перевод (UI версия1):")
+        print("Переведённый текст:", result)
 
