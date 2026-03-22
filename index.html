@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Переводчик · Нестеренко А.Р.</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #faf8f3;
+      --cream: #f2ece0;
+      --ink: #1e1a14;
+      --ink2: #6b6257;
+      --rust: #b84a24;
+      --rust-light: rgba(184,74,36,.1);
+      --line: #ddd5c4;
+      --sand: #e8dfc8;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;}
+
+    /* ── NAV ── */
+    nav{
+      position:sticky;top:0;z-index:100;
+      background:rgba(250,248,243,.92);backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--line);
+      padding:0 6vw;
+      display:flex;justify-content:space-between;align-items:center;
+    }
+    .nav-logo{
+      font-family:'DM Serif Display',serif;
+      font-size:.95rem;letter-spacing:.05em;
+      padding:1.3rem 0;color:var(--ink);
+    }
+    .nav-links{display:flex;gap:2.5rem;list-style:none;}
+    .nav-links a{
+      font-size:.73rem;letter-spacing:.1em;text-transform:uppercase;
+      color:var(--ink2);text-decoration:none;transition:color .2s;
+    }
+    .nav-links a:hover{color:var(--rust);}
+
+    /* ── HERO ── */
+    .hero{
+      display:grid;grid-template-columns:1fr 1fr;
+      min-height:92vh;border-bottom:1px solid var(--line);
+    }
+    .hero-l{
+      padding:9vw 6vw;
+      display:flex;flex-direction:column;justify-content:space-between;
+      border-right:1px solid var(--line);
+    }
+    .hero-chip{
+      display:inline-flex;align-items:center;gap:.6rem;
+      font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--rust);margin-bottom:3rem;
+    }
+    .hero-chip::before{
+      content:'';width:28px;height:1px;background:var(--rust);
+    }
+    h1{
+      font-family:'DM Serif Display',serif;
+      font-size:clamp(3rem,5.5vw,6rem);
+      font-weight:400;line-height:.93;letter-spacing:-.025em;
+    }
+    h1 em{font-style:italic;color:var(--rust);}
+    .hero-sub{
+      max-width:340px;font-size:.92rem;
+      line-height:1.8;color:var(--ink2);
+    }
+    .hero-btns{display:flex;gap:.8rem;margin-top:2rem;flex-wrap:wrap;}
+    .btn-fill{
+      padding:.85rem 1.8rem;background:var(--rust);color:#fff;
+      text-decoration:none;font-size:.75rem;letter-spacing:.1em;
+      text-transform:uppercase;transition:opacity .2s;
+    }
+    .btn-fill:hover{opacity:.85;}
+    .btn-outline{
+      padding:.85rem 1.8rem;border:1px solid var(--line);color:var(--ink2);
+      text-decoration:none;font-size:.75rem;letter-spacing:.1em;
+      text-transform:uppercase;transition:border-color .2s,color .2s;
+    }
+    .btn-outline:hover{border-color:var(--rust);color:var(--rust);}
+
+    /* hero right — схема работы */
+    .hero-r{
+      background:var(--cream);
+      display:flex;flex-direction:column;justify-content:center;
+      padding:7vw 6vw;
+    }
+    .flow-wrap{ display:flex; flex-direction:column; gap:0; }
+    .flow-label{
+      font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;
+      color:var(--rust);margin-bottom:2rem;
+    }
+    .flow-steps{ display:flex; flex-direction:column; }
+    .flow-step{
+      display:flex;align-items:flex-start;gap:1.2rem;
+      padding:1.4rem 1.6rem;
+      background:var(--paper);border:1px solid var(--line);
+      transition:background .2s;
+    }
+    .flow-step:not(:last-of-type){ border-bottom:none; }
+    .flow-step:hover{ background:#fff; }
+    .flow-step.fs-accent{
+      background:var(--rust);border-color:var(--rust);
+    }
+    .flow-step.fs-accent .fs-title{ color:#fff; }
+    .flow-step.fs-accent .fs-desc{ color:rgba(255,255,255,.7); }
+    .fs-icon{ font-size:1.3rem; flex-shrink:0; margin-top:.1rem; }
+    .fs-title{
+      font-family:'DM Serif Display',serif;
+      font-size:1rem;font-weight:400;margin-bottom:.3rem;color:var(--ink);
+    }
+    .fs-desc{ font-size:.8rem;color:var(--ink2);line-height:1.6; }
+    .flow-arrow{
+      text-align:center;padding:.4rem 0;
+      font-size:.85rem;color:var(--line);
+      background:var(--cream);
+    }
+
+    /* ── МОДУЛИ — аккордеон ── */
+    #modules{border-bottom:1px solid var(--line);}
+    .sec-hd{
+      display:flex;justify-content:space-between;align-items:flex-end;
+      padding:2.5rem 6vw;border-bottom:1px solid var(--line);
+    }
+    .sec-lbl{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--rust);margin-bottom:.4rem;}
+    .sec-ttl{font-family:'DM Serif Display',serif;font-size:clamp(1.5rem,2.8vw,2.2rem);font-weight:400;}
+    .sec-cnt{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--ink2);}
+
+    .acc-list{padding:0 6vw;}
+    .acc-item{border-bottom:1px solid var(--line);}
+    .acc-item:first-child{border-top:1px solid var(--line);}
+    .acc-trigger{
+      display:grid;
+      grid-template-columns:3rem 1fr auto auto;
+      align-items:center;gap:1.5rem;
+      padding:1.6rem 0;cursor:pointer;
+      transition:color .2s;
+    }
+    .acc-trigger:hover .acc-name{color:var(--rust);}
+    .acc-idx{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--ink2);}
+    .acc-name{font-family:'DM Serif Display',serif;font-size:1.15rem;font-weight:400;transition:color .2s;}
+    .acc-file{
+      font-family:'DM Mono',monospace;font-size:.65rem;
+      color:var(--rust);padding:.2rem .6rem;
+      border:1px solid rgba(184,74,36,.3);
+    }
+    .acc-arrow{
+      font-size:.7rem;color:var(--ink2);
+      transition:transform .25s;user-select:none;
+    }
+    .acc-item.open .acc-arrow{transform:rotate(90deg);}
+    .acc-body{
+      max-height:0;overflow:hidden;
+      transition:max-height .3s ease,padding .3s ease;
+    }
+    .acc-item.open .acc-body{max-height:120px;}
+    .acc-body-in{
+      padding-left:calc(3rem + 1.5rem);
+      padding-bottom:1.4rem;
+      font-size:.87rem;color:var(--ink2);line-height:1.75;
+    }
+
+    /* ── СТЕК ── */
+    #stack{background:var(--ink);color:var(--paper);border-bottom:1px solid #2a2520;}
+    #stack .sec-hd{border-bottom-color:#282420;}
+    #stack .sec-lbl{color:var(--rust);}
+    #stack .sec-ttl{color:var(--paper);}
+    #stack .sec-cnt{color:#4a4540;}
+    .stack-g{display:grid;grid-template-columns:repeat(3,1fr);}
+    .sk{
+      padding:2.5rem 6vw;
+      border-right:1px solid #1e1c18;border-bottom:1px solid #1e1c18;
+      transition:background .2s;
+    }
+    .sk:nth-child(3n){border-right:none;}
+    .sk:hover{background:rgba(255,255,255,.03);}
+    .sk-n{font-family:'DM Mono',monospace;font-size:.6rem;color:#3a3830;margin-bottom:.8rem;}
+    .sk-nm{font-family:'DM Serif Display',serif;font-size:1.2rem;margin-bottom:.4rem;}
+    .sk-nm em{font-style:normal;color:var(--rust);}
+    .sk-d{font-size:.8rem;color:#6a6258;line-height:1.65;}
+
+    /* ── РЕПО ── */
+    #repo{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line);}
+    .repo-l{
+      padding:6vw;border-right:1px solid var(--line);
+      display:flex;flex-direction:column;justify-content:space-between;
+    }
+    .repo-tag{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--rust);margin-bottom:1rem;}
+    .repo-ttl{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3vw,3rem);line-height:1.15;margin-bottom:1.5rem;}
+    .repo-desc{font-size:.88rem;color:var(--ink2);line-height:1.8;max-width:360px;}
+    .repo-btn{
+      display:inline-block;padding:.95rem 2rem;
+      background:var(--rust);color:#fff;text-decoration:none;
+      font-size:.73rem;letter-spacing:.1em;text-transform:uppercase;
+      transition:opacity .2s;align-self:flex-start;
+    }
+    .repo-btn:hover{opacity:.85;}
+    .repo-r{
+      padding:6vw;background:var(--cream);
+      display:flex;flex-direction:column;justify-content:center;gap:1.2rem;
+    }
+    .url-b{border:1px solid var(--line);padding:1.1rem 1.4rem;background:var(--paper);}
+    .url-l{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin-bottom:.3rem;}
+    .url-b a{font-family:'DM Mono',monospace;font-size:.78rem;color:var(--ink);text-decoration:none;word-break:break-all;}
+    .url-b a:hover{color:var(--rust);}
+
+    /* ── FOOTER ── */
+    footer{
+      padding:1.5rem 6vw;border-top:1px solid var(--line);
+      display:flex;justify-content:space-between;align-items:center;
+    }
+    footer span{font-size:.72rem;color:var(--ink2);}
+
+    @media(max-width:860px){
+      .hero{grid-template-columns:1fr;}
+      .hero-l{border-right:none;border-bottom:1px solid var(--line);}
+      .hero-stats{grid-template-columns:repeat(2,1fr);}
+      .stack-g{grid-template-columns:1fr 1fr;}
+      #repo{grid-template-columns:1fr;}
+      .repo-l{border-right:none;border-bottom:1px solid var(--line);}
+      .acc-trigger{grid-template-columns:2.5rem 1fr auto;}
+      .acc-file{display:none;}
+      footer{flex-direction:column;gap:.4rem;text-align:center;}
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">Интеллектуальный переводчик</div>
+    <ul class="nav-links">
+      <li><a href="#modules">Модули</a></li>
+      <li><a href="#stack">Технологии</a></li>
+      <li><a href="#repo">Репозиторий</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-l">
+      <div>
+        <div class="hero-chip">Лабораторная работа №6</div>
+        <h1>Авто<em>матический</em><br>перевод<br>текста</h1>
+      </div>
+      <div>
+        <p class="hero-sub">Приложение с автоопределением языка, голосовым вводом и распознаванием текста с изображений. Разработано на Python в рамках дисциплины ПППИ.</p>
+        <div class="hero-btns">
+          <a href="https://github.com/aleksandranester/translator-auto-detect" target="_blank" class="btn-fill">GitHub →</a>
+          <a href="#modules" class="btn-outline">Модули проекта</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-r">
+      <div class="flow-wrap">
+
+        <div class="flow-label">Как работает переводчик</div>
+
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="fs-icon">✏️</div>
+            <div class="fs-body">
+              <div class="fs-title">Ввод текста</div>
+              <div class="fs-desc">Пользователь вводит текст вручную, голосом или загружает изображение</div>
+            </div>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step">
+            <div class="fs-icon">🔍</div>
+            <div class="fs-body">
+              <div class="fs-title">Определение языка</div>
+              <div class="fs-desc">Система автоматически анализирует текст и определяет исходный язык</div>
+            </div>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step">
+            <div class="fs-icon">🌐</div>
+            <div class="fs-body">
+              <div class="fs-title">Перевод</div>
+              <div class="fs-desc">Движок переводит текст на выбранный язык и сохраняет результат в историю</div>
+            </div>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step fs-accent">
+            <div class="fs-icon">✅</div>
+            <div class="fs-body">
+              <div class="fs-title">Результат</div>
+              <div class="fs-desc">Переведённый текст отображается пользователю</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- МОДУЛИ — аккордеон -->
+  <section id="modules">
+    <div class="sec-hd">
+      <div>
+        <div class="sec-lbl">Архитектура</div>
+        <div class="sec-ttl">Модули проекта</div>
+      </div>
+      <div class="sec-cnt">10 компонентов</div>
+    </div>
+    <div class="acc-list">
+
+      <div class="acc-item open">
+        <div class="acc-trigger" onclick="tog(this)">
+          <span class="acc-idx">01</span>
+          <span class="acc-name">Главный модуль</span>
+          <span class="acc-file">main.py</span>
+          <span class="acc-arrow">▶</span>
+        </div>
+        <div class="acc-body"><div class="acc-body-in">Точка входа в приложение. Инициализирует все компоненты системы и запускает основной рабочий процесс: определение языка, перевод, кэш, история.</div></div>
+      </div>
+
+      <div class="acc-item">
+        <div class="acc-trigger" onclick="tog(this)">
+          <span class="acc-idx">02</span>
+          <span class="acc-name">Интерфейс пользователя</span>
+          <span class="acc-file">ui.py</span>
+          <span class="acc-arrow">▶</span>
+        </div>
+        <div class="acc-body"><div class="acc-body-in">Управляет полем ввода исходного текста, выбором целевого языка и отображением результата перевода. Адаптивный макет для разных устройств.</div></div>
+      </div>
+
+      <div class="acc-item">
+        <div class="acc-trigger" onclick="tog(this)">
+          <span class="acc-idx">03</span>
+          <span class="acc-name">Определение языка</span>
+          <span class="acc-file">language_detection.py</span>
+          <span class="acc-arrow">▶</span>
+        </div>
+        <div class="acc-body"><div class="acc-body-in">Автоматически анализирует символьный состав текста и определяет исходный язык. Пользователю не нужно указывать язык вручную.</div></div>
+      </div>
+
+      <div class="acc-item">
+        <div class="acc-trigger" onclick="tog(this)">
+          <span class="acc-idx">04</span>
+          <span class="acc-name">Движок перевода</span>
+          <span class="acc-file">translation_engine.py</span>
+          <span class="acc-arrow">▶</span>
+        </div>
+        <div class="acc-body"><div class="acc-body-in">Основной функциональный модуль. Выполняет перевод текста на указанный целевой язык через внешний API или встроенные алгоритмы.</div></div>
+      </div>
+
+      <div class="acc-item">
+        <div class="acc-trigger" onclick="tog(this)">
+          <span class="acc-idx">05</span>
+          <span class="acc-name">История переводов</span>
+          <span class="acc-file">history_manager.py</span>
+          <span class="acc-arrow">▶</span>
+        </div>
+        <div class="acc-body"><div class="acc-body-in">Сохраняет пары «исходный текст — перевод» в течение сессии. Позволяет повторно просматривать и использовать ранее выполненные переводы.</div></div>
+      </div>
+
+      <div class="acc-item">
+        <div class="acc-trigger" onclick="tog(this)">
+          <span class="acc-idx">06</span>
+          <span class="acc-name">Распознавание OCR</span>
+          <span class="acc-file">ocr_module.py</span>
+          <span class="acc-arrow">▶</span>
+        </div>
+        <div class="acc-body"><div class="acc-body-in">Извлекает текст из графических файлов форматов PNG, JPEG, BMP и передаёт его в движок перевода. В реальной реализации использует Tesseract.</div></div>
+      </div>
+
+      <div class="acc-item">
+        <div class="acc-trigger" onclick="tog(this)">
+          <span class="acc-idx">07</span>
+          <span class="acc-name">Голосовой ввод</span>
+          <span class="acc-file">voice_input.py</span>
+          <span class="acc-arrow">▶</span>
+        </div>
+        <div class="acc-body"><div class="acc-body-in">Захватывает аудио с микрофона и преобразует речь пользователя в текстовую строку для последующего перевода.</div></div>
+      </div>
+
+      <div class="acc-item">
+        <div class="acc-trigger" onclick="tog(this)">
+          <span class="acc-idx">08</span>
+          <span class="acc-name">Настройки пользователя</span>
+          <span class="acc-file">settings.py</span>
+          <span class="acc-arrow">▶</span>
+        </div>
+        <div class="acc-body"><div class="acc-body-in">Хранит персональные параметры приложения: язык перевода по умолчанию и тема оформления интерфейса (светлая / тёмная).</div></div>
+      </div>
+
+      <div class="acc-item">
+        <div class="acc-trigger" onclick="tog(this)">
+          <span class="acc-idx">09</span>
+          <span class="acc-name">Оптимизация производительности</span>
+          <span class="acc-file">optimization.py</span>
+          <span class="acc-arrow">▶</span>
+        </div>
+        <div class="acc-body"><div class="acc-body-in">Кэширует результаты переводов для снижения нагрузки на внешний API и ускорения повторных запросов к одним и тем же текстам.</div></div>
+      </div>
+
+      <div class="acc-item">
+        <div class="acc-trigger" onclick="tog(this)">
+          <span class="acc-idx">10</span>
+          <span class="acc-name">Локализация интерфейса</span>
+          <span class="acc-file">localization.py</span>
+          <span class="acc-arrow">▶</span>
+        </div>
+        <div class="acc-body"><div class="acc-body-in">Обеспечивает поддержку нескольких языков интерфейса приложения. Хранит строки на разных языках и возвращает нужную по ключу.</div></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- СТЕК -->
+  <section id="stack">
+    <div class="sec-hd">
+      <div>
+        <div class="sec-lbl">Технологии</div>
+        <div class="sec-ttl">Стек разработки</div>
+      </div>
+      <div class="sec-cnt">6 инструментов</div>
+    </div>
+    <div class="stack-g">
+      <div class="sk"><div class="sk-n">001</div><div class="sk-nm">Python <em>3</em></div><div class="sk-d">Основной язык. Объектно-ориентированный подход, аннотации типов, модульная архитектура.</div></div>
+      <div class="sk"><div class="sk-n">002</div><div class="sk-nm"><em>pdoc</em>3</div><div class="sk-d">Автоматическая генерация HTML-справочника из докблоков Sphinx docstring (PEP 257).</div></div>
+      <div class="sk"><div class="sk-n">003</div><div class="sk-nm">DocBook <em>XML</em></div><div class="sk-d">Структурированная документация с валидацией по схеме DocBook 5.0 в Oxygen XML Editor.</div></div>
+      <div class="sk"><div class="sk-n">004</div><div class="sk-nm"><em>Git</em></div><div class="sk-d">Контроль версий. Ветки, коммиты, разрешение конфликтов, восстановление ревизий.</div></div>
+      <div class="sk"><div class="sk-n">005</div><div class="sk-nm">GitHub</div><div class="sk-d">Хостинг репозитория. Публичный доступ к коду и документации всех лабораторных работ.</div></div>
+      <div class="sk"><div class="sk-n">006</div><div class="sk-nm">GitHub <em>Pages</em></div><div class="sk-d">Бесплатный хостинг статического сайта напрямую из ветки репозитория.</div></div>
+    </div>
+  </section>
+
+  <!-- РЕПО -->
+  <div id="repo">
+    <div class="repo-l">
+      <div>
+        <div class="repo-tag">Исходный код</div>
+        <div class="repo-ttl">translator-<br>auto-detect</div>
+        <p class="repo-desc">Репозиторий содержит весь исходный код, документацию DocBook XML, сгенерированное справочное руководство и материалы всех лабораторных работ.</p>
+      </div>
+      <a href="https://github.com/aleksandranester/translator-auto-detect" target="_blank" class="repo-btn">Открыть репозиторий</a>
+    </div>
+    <div class="repo-r">
+      <div class="url-b"><div class="url-l">Аккаунт GitHub</div><a href="https://github.com/aleksandranester" target="_blank">github.com/aleksandranester</a></div>
+      <div class="url-b"><div class="url-l">Репозиторий</div><a href="https://github.com/aleksandranester/translator-auto-detect" target="_blank">github.com/aleksandranester/translator-auto-detect</a></div>
+      <div class="url-b"><div class="url-l">Веб-сайт (GitHub Pages)</div><a href="https://aleksandranester.github.io/translator-auto-detect" target="_blank">aleksandranester.github.io/translator-auto-detect</a></div>
+    </div>
+  </div>
+
+  <footer>
+    <span>Нестеренко А.Р. · ДонНТУ · Кафедра ПИ · ПИ-22б</span>
+    <span>Профессиональная практика программной инженерии · 2026</span>
+  </footer>
+
+  <script>
+    function tog(trigger) {
+      trigger.closest('.acc-item').classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>
